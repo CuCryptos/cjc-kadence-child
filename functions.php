@@ -67,6 +67,18 @@ add_action('init', function () {
 });
 
 /* =============================================
+   Google Analytics GA4
+   ============================================= */
+
+add_action('wp_head', function () {
+    if (is_user_logged_in()) return; // Don't track admin visits
+    ?>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7C8X9QJD7V"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-7C8X9QJD7V');</script>
+    <?php
+}, 1);
+
+/* =============================================
    Styles & Scripts
    ============================================= */
 
