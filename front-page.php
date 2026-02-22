@@ -322,13 +322,19 @@ if (!empty($category_tiles)) :
 <!-- 4. About / Story Teaser -->
 <section class="homepage-about">
     <div class="homepage-about__image-wrap" data-reveal="left">
+        <?php
+        $author_photo = $uploads_url . '/author-photo-curtis.png';
+        if ( ! file_exists( WP_CONTENT_DIR . '/uploads/site-images/author-photo-curtis.png' ) ) {
+            $author_photo = content_url('/uploads/2026/02/author-photo-curtis.png');
+        }
+        ?>
         <img class="homepage-about__image"
-             src="<?php echo esc_url($uploads_url . '/author-photo-curtis.png'); ?>"
-             alt="Curtis Vaughan in the kitchen"
+             src="<?php echo esc_url($author_photo); ?>"
+             alt="CurtisJ in the kitchen"
              loading="lazy">
     </div>
     <div class="homepage-about__text" data-reveal="right">
-        <h2 class="homepage-about__heading">Aloha — I'm Curtis</h2>
+        <h2 class="homepage-about__heading">Aloha — I'm CurtisJ</h2>
         <p>Welcome to CurtisJCooks, where I share the authentic flavors and traditions of Hawaiian cuisine. From plate lunches to poke bowls, every recipe here carries the spirit of the islands — born from generations of local cooking, plantation-era fusion, and the aloha that makes Hawaiian food so special.</p>
         <p>Whether you're on the mainland dreaming of island flavors or a local looking for your next kitchen project, I'm glad you're here.</p>
         <a class="homepage-about__link" href="<?php echo esc_url(home_url('/about/')); ?>">Read My Story &rarr;</a>
