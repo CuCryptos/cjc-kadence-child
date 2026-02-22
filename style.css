@@ -380,17 +380,25 @@ a:hover {
     padding: 0;
 }
 
-/* Kill Kadence archive header — we render our own hero */
+/* Kill Kadence hero/title area — our templates own the layout */
 .archive .entry-hero-container-inner,
 .category .entry-hero-container-inner,
-.tag .entry-hero-container-inner {
+.tag .entry-hero-container-inner,
+.page .entry-hero-container-inner,
+.single-post .entry-hero-container-inner {
     display: none;
 }
 
-/* Kill Kadence archive title area */
+/* Kill Kadence title areas */
 .archive .kadence-archive-title,
 .category .kadence-archive-title,
 .tag .kadence-archive-title {
+    display: none;
+}
+
+/* Kill the entire entry-hero section (gray banner) on pages and posts */
+.page .entry-hero,
+.single-post .entry-hero {
     display: none;
 }
 
