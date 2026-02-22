@@ -25,8 +25,9 @@ if ( ! defined( 'CJC_CHILD_URI' ) ) {
    CJC Recipe System
    ============================================= */
 
-// Load Recipe System Classes (skip if plugin or another theme already loaded them)
-if ( ! class_exists( 'CJC_Recipe_Post_Type' ) ) {
+// Recipe System: skip during theme preview to avoid conflicts with active theme.
+// Classes will load normally once this theme is fully activated.
+if ( ! wp_is_theme_preview() && ! class_exists( 'CJC_Recipe_Post_Type' ) ) {
     require_once CJC_CHILD_DIR . '/inc/recipe/class-cjc-recipe-post-type.php';
     require_once CJC_CHILD_DIR . '/inc/recipe/class-cjc-recipe-meta.php';
     require_once CJC_CHILD_DIR . '/inc/recipe/class-cjc-recipe-rest-api.php';
