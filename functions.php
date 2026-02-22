@@ -25,8 +25,46 @@ if ( ! defined( 'CJC_CHILD_URI' ) ) {
    CJC Recipe System
    ============================================= */
 
-// Recipe system temporarily disabled during deployment.
-// Will re-enable after debugging class loading on live server.
+// Full recipe system (CPT, blocks, migration UI) disabled during deployment.
+// Register only the meta fields so single.php can read them and REST API can write them.
+add_action('init', function () {
+    $text_fields = [
+        'prep_time', 'cook_time', 'total_time', 'yield', 'description',
+        'author_name', 'keywords', 'category', 'cuisine', 'method', 'diet',
+        'notes', 'video_url',
+        'calories', 'fat', 'protein', 'carbohydrates', 'sugar', 'sodium',
+        'fiber', 'cholesterol', 'saturated_fat', 'unsaturated_fat', 'trans_fat',
+        'serving_size',
+    ];
+    foreach ($text_fields as $field) {
+        register_post_meta('post', '_cjc_recipe_' . $field, [
+            'show_in_rest'  => true,
+            'single'        => true,
+            'type'          => 'string',
+            'auth_callback' => function () { return current_user_can('edit_posts'); },
+        ]);
+    }
+    // JSON fields (ingredients, instructions)
+    register_post_meta('post', '_cjc_recipe_ingredients', [
+        'show_in_rest'  => true,
+        'single'        => true,
+        'type'          => 'string',
+        'auth_callback' => function () { return current_user_can('edit_posts'); },
+    ]);
+    register_post_meta('post', '_cjc_recipe_instructions', [
+        'show_in_rest'  => true,
+        'single'        => true,
+        'type'          => 'string',
+        'auth_callback' => function () { return current_user_can('edit_posts'); },
+    ]);
+    // Numeric fields
+    register_post_meta('post', '_cjc_recipe_yield_number', [
+        'show_in_rest'  => true,
+        'single'        => true,
+        'type'          => 'number',
+        'auth_callback' => function () { return current_user_can('edit_posts'); },
+    ]);
+});
 
 /* =============================================
    Styles & Scripts
