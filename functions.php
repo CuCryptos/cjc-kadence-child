@@ -28,7 +28,13 @@ if ( ! defined( 'CJC_CHILD_URI' ) ) {
 // Recipe classes are also in the old theme (suspended-flavor-child).
 // Only load ours when this theme is the ACTIVE theme (not during
 // Customizer preview where both themes' functions.php run).
-$cjc_is_active = ( get_option('stylesheet') === 'cjc-kadence-child' );
+// NOTE: get_option('stylesheet') is FILTERED by the Customizer to return
+// the preview theme, so we query the database directly to get the real value.
+global $wpdb;
+$cjc_real_stylesheet = $wpdb->get_var(
+    "SELECT option_value FROM {$wpdb->options} WHERE option_name = 'stylesheet'"
+);
+$cjc_is_active = ( $cjc_real_stylesheet === 'cjc-kadence-child' );
 
 if ( $cjc_is_active && ! class_exists( 'CJC_Recipe_Post_Type' ) ) {
     require_once CJC_CHILD_DIR . '/inc/recipe/class-cjc-recipe-post-type.php';
