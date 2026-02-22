@@ -2272,3 +2272,256 @@ a:hover {
     font-weight: 700;
     letter-spacing: 0.02em;
 }
+
+/* ==========================================================================
+   Page Template — Hero
+   Same visual pattern as .archive-hero but taller (45vh, max 450px)
+   ========================================================================== */
+.page-hero {
+    position: relative;
+    width: 100%;
+    height: 45vh;
+    max-height: 450px;
+    min-height: 260px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-hero__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.page-hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(28, 25, 23, 0.6) 0%,
+            rgba(14, 116, 144, 0.15) 15%,
+            rgba(14, 116, 144, 0.1) 40%,
+            rgba(28, 25, 23, 0.5) 60%,
+            rgba(28, 25, 23, 0.85) 100%
+        );
+    z-index: 2;
+}
+
+/* No-image fallback: gradient-only hero */
+.page-hero--no-image .page-hero__overlay {
+    background:
+        linear-gradient(
+            to bottom,
+            var(--cjc-ocean-deep) 0%,
+            rgba(14, 116, 144, 0.85) 50%,
+            var(--cjc-lava-black) 100%
+        );
+}
+
+/* Kapa diamond pattern overlay */
+.page-hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='%23fefce8' stroke-width='0.5' opacity='0.06'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 40px 40px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Wave edge at bottom */
+.page-hero::before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 48px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 48' preserveAspectRatio='none'%3E%3Cpath d='M0 48 L0 24 Q180 0 360 24 Q540 48 720 24 Q900 0 1080 24 Q1260 48 1440 24 L1440 48 Z' fill='%23fffbeb'/%3E%3C/svg%3E");
+    background-size: 100% 48px;
+    background-repeat: no-repeat;
+    z-index: 4;
+}
+
+.page-hero__content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    max-width: var(--cjc-site-width);
+    padding: var(--cjc-space-xl);
+}
+
+.page-hero__breadcrumbs {
+    font-family: var(--cjc-font-body);
+    font-size: var(--cjc-text-small);
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: var(--cjc-space-md);
+}
+
+.page-hero__breadcrumbs a {
+    color: var(--cjc-sunset-gold-light);
+    text-decoration: none;
+    transition: color var(--cjc-transition-fast);
+}
+
+.page-hero__breadcrumbs a:hover {
+    color: var(--cjc-sunset-gold);
+}
+
+.page-hero__breadcrumb-sep {
+    margin: 0 var(--cjc-space-xs);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.page-hero__title {
+    font-family: var(--cjc-font-heading);
+    font-size: var(--cjc-text-hero);
+    font-weight: 700;
+    color: white;
+    margin: 0;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    position: relative;
+    padding-bottom: var(--cjc-space-lg);
+}
+
+/* Wave accent under title */
+.page-hero__title::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 12px;
+    margin: var(--cjc-space-md) auto 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='12' viewBox='0 0 120 12'%3E%3Cpath d='M0 6 Q15 0 30 6 Q45 12 60 6 Q75 0 90 6 Q105 12 120 6' fill='none' stroke='%23d97706' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center;
+    opacity: 0.9;
+}
+
+@media (max-width: 767px) {
+    .page-hero {
+        height: 35vh;
+        min-height: 220px;
+    }
+
+    .page-hero__title {
+        font-size: clamp(1.5rem, 6vw, 2.25rem);
+    }
+}
+
+/* ==========================================================================
+   Page Template — Content Area
+   Mirrors .recipe-story typography for consistent reading experience
+   ========================================================================== */
+.page-content {
+    background-color: var(--cjc-coconut-cream);
+    padding: var(--cjc-space-3xl) var(--cjc-space-lg);
+}
+
+.page-content__inner {
+    max-width: var(--cjc-content-width);
+    margin: 0 auto;
+}
+
+.page-content__inner p {
+    font-family: var(--cjc-font-body);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    margin-bottom: var(--cjc-space-lg);
+    color: var(--cjc-lava-black);
+}
+
+.page-content__inner h2 {
+    font-family: var(--cjc-font-heading);
+    font-size: var(--cjc-text-h2);
+    color: var(--cjc-volcanic-earth);
+    margin: var(--cjc-space-3xl) 0 var(--cjc-space-md) 0;
+}
+
+.page-content__inner h3 {
+    font-family: var(--cjc-font-heading);
+    font-size: var(--cjc-text-h3);
+    color: var(--cjc-lava-black);
+    margin: var(--cjc-space-2xl) 0 var(--cjc-space-md) 0;
+}
+
+.page-content__inner blockquote {
+    font-family: var(--cjc-font-accent);
+    font-size: var(--cjc-text-h3);
+    color: var(--cjc-volcanic-earth);
+    border-left: 4px solid var(--cjc-ocean-deep);
+    margin: var(--cjc-space-2xl) 0;
+    padding: var(--cjc-space-md) var(--cjc-space-xl);
+    font-style: italic;
+    background-color: white;
+    border-radius: 0 var(--cjc-radius-md) var(--cjc-radius-md) 0;
+}
+
+.page-content__inner a {
+    color: var(--cjc-ocean-deep);
+    text-decoration: underline;
+    text-decoration-color: rgba(14, 116, 144, 0.3);
+    text-underline-offset: 3px;
+    transition: color var(--cjc-transition-fast), text-decoration-color var(--cjc-transition-fast);
+}
+
+.page-content__inner a:hover {
+    color: var(--cjc-volcanic-earth);
+    text-decoration-color: var(--cjc-volcanic-earth);
+}
+
+.page-content__inner ul,
+.page-content__inner ol {
+    padding-left: var(--cjc-space-xl);
+    margin-bottom: var(--cjc-space-lg);
+}
+
+.page-content__inner li {
+    font-family: var(--cjc-font-body);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--cjc-lava-black);
+    margin-bottom: var(--cjc-space-sm);
+}
+
+.page-content__inner img {
+    border-radius: var(--cjc-radius-md);
+    max-width: 100%;
+    height: auto;
+    margin: var(--cjc-space-lg) auto;
+    display: block;
+}
+
+.page-content__inner figure {
+    margin: var(--cjc-space-2xl) 0;
+}
+
+/* Hide any Kadence-injected title inside our content area */
+.page-content .entry-title {
+    display: none;
+}
+
+/* ==========================================================================
+   Page Template — Explore More Section
+   ========================================================================== */
+.page-explore {
+    padding: var(--cjc-space-4xl) var(--cjc-space-lg);
+    background-color: var(--cjc-warm-sand);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='%230e7490' stroke-width='0.5' opacity='0.06'/%3E%3C/svg%3E");
+}
+
+.page-explore__grid {
+    max-width: var(--cjc-site-width);
+    margin: 0 auto;
+}
