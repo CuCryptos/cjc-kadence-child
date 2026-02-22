@@ -325,7 +325,7 @@ if (!empty($category_tiles)) :
         <?php
         $author_photo = $uploads_url . '/author-photo-curtis.png';
         if ( ! file_exists( WP_CONTENT_DIR . '/uploads/site-images/author-photo-curtis.png' ) ) {
-            $author_photo = content_url('/uploads/2026/02/author-photo-curtis.png');
+            $author_photo = content_url('/uploads/2026/02/author-photo-curtis-1.png');
         }
         ?>
         <img class="homepage-about__image"
