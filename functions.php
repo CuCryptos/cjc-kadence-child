@@ -255,6 +255,18 @@ if (defined('WP_CLI') && WP_CLI) {
 }
 
 /* =============================================
+   Kadence Layout Overrides — Disable Hero Title on Pages & Posts
+   Our templates handle their own title areas.
+   ============================================= */
+
+add_filter('kadence_post_layout', function ($layout) {
+    if (is_page() || is_singular('post')) {
+        $layout['title'] = 'normal';
+    }
+    return $layout;
+});
+
+/* =============================================
    Archive Pages — 12 Posts Per Page
    ============================================= */
 
