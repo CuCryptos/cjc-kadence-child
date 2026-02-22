@@ -12,6 +12,12 @@ get_header();
 
 $uploads_url = content_url('/uploads/site-images');
 
+// Hero image — use media library copy if site-images dir doesn't exist
+$hero_image_url = $uploads_url . '/homepage-hero.png';
+if ( ! file_exists( WP_CONTENT_DIR . '/uploads/site-images/homepage-hero.png' ) ) {
+    $hero_image_url = content_url('/uploads/2026/02/homepage-hero.png');
+}
+
 // --- Hawaiian proverbs (ʻōlelo noʻeau) ---
 $proverbs = [
     ['haw' => 'ʻAi no i ka ʻono, a māʻona', 'en' => 'Eat what is delicious until satisfied'],
@@ -85,7 +91,7 @@ shuffle($picker_recipes);
 <!-- 1. Time-Aware Hero -->
 <section class="homepage-hero">
     <img class="homepage-hero__image"
-         src="<?php echo esc_url($uploads_url . '/homepage-hero.png'); ?>"
+         src="<?php echo esc_url($hero_image_url); ?>"
          alt="Hawaiian food spread on a rustic wooden table">
     <div class="homepage-hero__overlay" aria-hidden="true"></div>
 

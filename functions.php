@@ -37,7 +37,9 @@ add_action('wp_head', function () {
     echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
 
     if (is_front_page()) {
-        $hero_url = content_url('/uploads/site-images/homepage-hero.png');
+        $hero_url = file_exists( WP_CONTENT_DIR . '/uploads/site-images/homepage-hero.png' )
+            ? content_url('/uploads/site-images/homepage-hero.png')
+            : content_url('/uploads/2026/02/homepage-hero.png');
         echo '<link rel="preload" as="image" href="' . esc_url($hero_url) . '">' . "\n";
     }
 }, 1);
