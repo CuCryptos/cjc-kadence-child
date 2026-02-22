@@ -380,26 +380,84 @@ a:hover {
     padding: 0;
 }
 
-/* Kill Kadence hero/title area — our templates own the layout */
+/* Kill Kadence hero/title area — archives use our custom hero */
 .archive .entry-hero-container-inner,
 .category .entry-hero-container-inner,
 .tag .entry-hero-container-inner,
-.page .entry-hero-container-inner,
 .single-post .entry-hero-container-inner {
     display: none;
 }
 
-/* Kill Kadence title areas */
+/* Kill Kadence archive title area */
 .archive .kadence-archive-title,
 .category .kadence-archive-title,
 .tag .kadence-archive-title {
     display: none;
 }
 
-/* Kill the entire entry-hero section (gray banner) on pages and posts */
-.page .entry-hero,
+/* Single posts: hide entry-hero (single.php has its own hero) */
 .single-post .entry-hero {
     display: none;
+}
+
+/* =============================================
+   Pages — Restyle Kadence title hero
+   Match CJC design system instead of default gray
+   ============================================= */
+
+.page .entry-hero {
+    background: var(--cjc-coconut-cream);
+    padding: var(--cjc-space-2xl, 3rem) 0 var(--cjc-space-lg, 1.5rem);
+}
+
+.page .entry-hero .entry-hero-container-inner {
+    background: transparent;
+}
+
+.page .entry-hero .hero-section-overlay {
+    display: none;
+}
+
+.page .entry-hero .entry-title {
+    font-family: var(--cjc-font-heading);
+    font-size: var(--cjc-text-h1);
+    color: var(--cjc-lava-black);
+    line-height: var(--cjc-leading-tight);
+    margin: 0;
+}
+
+/* --- Disable transparent header on pages ---
+   Transparent header is for homepage (dark hero) only.
+   Pages need solid header with dark text. */
+.page:not(.home) .site-header,
+.page:not(.home) .site-header .site-header-wrap,
+.page:not(.home) .site-header .site-header-inner-wrap,
+.page:not(.home) .site-header .site-header-upper-wrap,
+.page:not(.home) .site-header .site-header-upper-inner-wrap,
+.page:not(.home) .site-header .site-main-header-wrap,
+.page:not(.home) .site-header .site-header-row-container-inner,
+.page:not(.home) .site-header .site-container {
+    background: var(--cjc-coconut-cream) !important;
+    border-bottom: 1px solid var(--cjc-warm-sand) !important;
+}
+
+.page:not(.home) .site-header .site-title,
+.page:not(.home) .site-header .site-branding a,
+.page:not(.home) .site-header .primary-menu-container > ul > li > a,
+.page:not(.home) .site-header .search-toggle-open,
+.page:not(.home) .site-header a {
+    color: var(--cjc-lava-black) !important;
+    text-shadow: none !important;
+}
+
+.page:not(.home) .site-header .primary-menu-container > ul > li > a:hover {
+    color: var(--cjc-ocean-deep) !important;
+}
+
+.page:not(.home) .site-header .nav--toggle-sub .dropdown-nav-toggle svg,
+.page:not(.home) .site-header .search-toggle-open svg {
+    color: var(--cjc-lava-black) !important;
+    fill: var(--cjc-lava-black) !important;
 }
 
 /* Ensure full-width layout (no sidebar) */
