@@ -11,8 +11,8 @@ defined('ABSPATH') || exit;
    CJC Recipe System
    ============================================= */
 
-// Load Recipe System Classes (skip if plugin is handling it)
-if ( ! defined( 'CJC_RECIPE_VERSION' ) ) {
+// Load Recipe System Classes (skip if plugin or another theme already loaded them)
+if ( ! class_exists( 'CJC_Recipe_Post_Type' ) ) {
     require_once get_stylesheet_directory() . '/inc/recipe/class-cjc-recipe-post-type.php';
     require_once get_stylesheet_directory() . '/inc/recipe/class-cjc-recipe-meta.php';
     require_once get_stylesheet_directory() . '/inc/recipe/class-cjc-recipe-rest-api.php';
@@ -29,7 +29,9 @@ if ( ! defined( 'CJC_RECIPE_VERSION' ) ) {
     CJC_Recipe_Migration::init();
 }
 
-define('CJC_CHILD_VERSION', '1.0.0');
+if ( ! defined( 'CJC_CHILD_VERSION' ) ) {
+    define('CJC_CHILD_VERSION', '1.0.0');
+}
 define('CJC_CHILD_DIR', get_stylesheet_directory());
 define('CJC_CHILD_URI', get_stylesheet_directory_uri());
 
