@@ -189,7 +189,9 @@ Text Domain: cjc-kadence-child
 /* --- Transparent header (all pages/posts/archives) ---
    Kadence adds transparent bg via inline CSS when transparent-header class is on body.
    Forced on everywhere via __return_true filter in functions.php.
-   We reinforce it here and remove borders/shadows for clean overlay. */
+   We reinforce it here and remove borders/shadows for clean overlay.
+   #masthead override needed because Kadence inline CSS sets #masthead{background:#fff}. */
+.transparent-header #masthead,
 .transparent-header .site-header,
 .transparent-header .site-header .site-header-wrap,
 .transparent-header .site-header .site-header-inner-wrap,

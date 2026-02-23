@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
    ============================================= */
 
 if ( ! defined( 'CJC_CHILD_VERSION' ) ) {
-    define('CJC_CHILD_VERSION', '1.1.0');
+    define('CJC_CHILD_VERSION', '1.2.0');
 }
 if ( ! defined( 'CJC_CHILD_DIR' ) ) {
     define('CJC_CHILD_DIR', get_stylesheet_directory());
