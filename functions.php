@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
    ============================================= */
 
 if ( ! defined( 'CJC_CHILD_VERSION' ) ) {
-    define('CJC_CHILD_VERSION', '1.5.0');
+    define('CJC_CHILD_VERSION', '1.5.1');
 }
 if ( ! defined( 'CJC_CHILD_DIR' ) ) {
     define('CJC_CHILD_DIR', get_stylesheet_directory());
@@ -20,6 +20,38 @@ if ( ! defined( 'CJC_CHILD_DIR' ) ) {
 if ( ! defined( 'CJC_CHILD_URI' ) ) {
     define('CJC_CHILD_URI', get_stylesheet_directory_uri());
 }
+
+/* =============================================
+   301 Redirects — Fix 404s from external links
+   ============================================= */
+
+add_action('template_redirect', function () {
+    $redirects = [
+        // Hawaiian 404 → existing content
+        '/10-all-time-favorite-classic-dishes-you-need-to-try/' => '/hawaiian-foods-bucket-list/',
+        // Non-Hawaiian 404s → homepage
+        '/authentic-thai-dessert-recipes-you-can-make-at-home'  => '/',
+        '/copycat-taco-bell-beefy-five-layer-burrito-recipe/'   => '/',
+        '/ultimate-mac-and-cheese-recipe-how-to-make-the-best-comfort-food' => '/',
+        '/risotto-recipe/'          => '/',
+        '/homemade-german-recipes/' => '/',
+        '/vegan-lasagna-recipe'     => '/',
+        '/winter-comfort-foods'     => '/',
+        '/1480-2'                   => '/',
+        '/recipes-2/'               => '/',
+    ];
+
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $path = rtrim($path, '/') . '/';
+
+    foreach ($redirects as $source => $dest) {
+        $source_normalized = rtrim($source, '/') . '/';
+        if ($path === $source_normalized) {
+            wp_redirect(home_url($dest), 301);
+            exit;
+        }
+    }
+});
 
 /* =============================================
    CJC Recipe System
