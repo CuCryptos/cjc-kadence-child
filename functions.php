@@ -263,18 +263,17 @@ add_action('template_redirect', function () {
 });
 
 /* =============================================
-   SEO: IndexNow Key File Fallback
-   Serves the IndexNow verification key file when
-   Rank Math's rewrite is blocked by cache/nginx.
+   SEO: IndexNow Key File
+   Creates the physical key file in the web root so
+   nginx can serve it directly (static .txt files
+   bypass WordPress on this host).
    ============================================= */
 
-add_action('template_redirect', function () {
-    $path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
-    if ($path === 'bdd2830e8bac489f98f79bb58afcdf77.txt') {
-        header('Content-Type: text/plain');
-        header('X-Robots-Tag: noindex');
-        echo 'bdd2830e8bac489f98f79bb58afcdf77';
-        exit;
+add_action('init', function () {
+    $key = 'bdd2830e8bac489f98f79bb58afcdf77';
+    $file = ABSPATH . $key . '.txt';
+    if (!file_exists($file)) {
+        @file_put_contents($file, $key);
     }
 }, 1);
 
