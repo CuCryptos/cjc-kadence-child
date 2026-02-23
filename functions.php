@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
    ============================================= */
 
 if ( ! defined( 'CJC_CHILD_VERSION' ) ) {
-    define('CJC_CHILD_VERSION', '1.0.0');
+    define('CJC_CHILD_VERSION', '1.1.0');
 }
 if ( ! defined( 'CJC_CHILD_DIR' ) ) {
     define('CJC_CHILD_DIR', get_stylesheet_directory());
@@ -200,10 +200,12 @@ add_filter('style_loader_tag', function($tag, $handle, $src) {
 }, 10, 3);
 
 add_filter('style_loader_src', function($src) {
+    if ($src && strpos($src, 'cjc-kadence-child') !== false) return $src;
     return $src ? remove_query_arg('ver', $src) : $src;
 }, 10, 1);
 
 add_filter('script_loader_src', function($src) {
+    if ($src && strpos($src, 'cjc-kadence-child') !== false) return $src;
     return $src ? remove_query_arg('ver', $src) : $src;
 }, 10, 1);
 
