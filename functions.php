@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
    ============================================= */
 
 if ( ! defined( 'CJC_CHILD_VERSION' ) ) {
-    define('CJC_CHILD_VERSION', '1.3.0');
+    define('CJC_CHILD_VERSION', '1.4.0');
 }
 if ( ! defined( 'CJC_CHILD_DIR' ) ) {
     define('CJC_CHILD_DIR', get_stylesheet_directory());
@@ -211,10 +211,12 @@ add_filter('script_loader_src', function($src) {
 
 /* =============================================
    SEO: Noindex Non-Hawaiian Category Posts
+   Uses Rank Math's filter to modify its robots tag
+   instead of adding a duplicate meta tag.
    ============================================= */
 
-add_action('wp_head', function() {
-    if (!is_singular('post')) return;
+add_filter('rank_math/frontend/robots', function ($robots) {
+    if (!is_singular('post')) return $robots;
 
     $indexed_categories = [
         'island-comfort', 'island-drinks', 'poke-seafood', 'tropical-treats',
@@ -228,9 +230,37 @@ add_action('wp_head', function() {
     }
 
     if (!$in_indexed) {
-        echo '<meta name="robots" content="noindex, follow">' . "\n";
+        $robots['index'] = 'noindex';
     }
-}, 1);
+    return $robots;
+});
+
+/* =============================================
+   SEO: 301 Redirects for Old/Deleted URLs
+   Preserves link equity from Google-indexed pages
+   that no longer exist.
+   ============================================= */
+
+add_action('template_redirect', function () {
+    $redirects = [
+        '/1480-2/'           => '/kalua-pig-oven-roasted-hawaiian/',
+        '/contact-2/'        => '/about/',
+        '/contact/'          => '/about/',
+        '/blog-2/'           => '/',
+        '/blog/'             => '/',
+        '/shop/'             => '/',
+        '/copycat-taco-bell-beefy-five-layer-burrito-recipe/' => '/',
+        '/make-this-easy-pad-thai-recipe-in-just-30-minutes/' => '/',
+    ];
+
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $path = rtrim($path, '/') . '/';
+
+    if (isset($redirects[$path])) {
+        wp_redirect(home_url($redirects[$path]), 301);
+        exit;
+    }
+});
 
 /* =============================================
    Navigation Menus
