@@ -280,24 +280,12 @@ add_filter('kadence_post_layout', function ($layout) {
 });
 
 /* =============================================
-   Kadence Transparent Header — Disable on Pages
-   Prevents Kadence from injecting inline transparent
-   styles that override our solid header CSS.
+   Kadence Transparent Header — Enable on All Pages
+   All templates have immersive heroes; the header
+   overlays them with white text/logo.
    ============================================= */
 
-add_filter('kadence_transparent_header', function ($transparent) {
-    if (is_page() && !is_front_page()) {
-        return false;
-    }
-    return $transparent;
-});
-
-add_filter('body_class', function ($classes) {
-    if (is_page() && !is_front_page()) {
-        $classes = array_diff($classes, ['transparent-header']);
-    }
-    return $classes;
-});
+add_filter('kadence_transparent_header', '__return_true');
 
 /* =============================================
    Archive Pages — 12 Posts Per Page

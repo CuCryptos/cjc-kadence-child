@@ -186,8 +186,9 @@ Text Domain: cjc-kadence-child
     background: var(--cjc-volcanic-earth);
 }
 
-/* --- Transparent header on single posts & homepage ---
+/* --- Transparent header (all pages/posts/archives) ---
    Kadence adds transparent bg via inline CSS when transparent-header class is on body.
+   Forced on everywhere via __return_true filter in functions.php.
    We reinforce it here and remove borders/shadows for clean overlay. */
 .transparent-header .site-header,
 .transparent-header .site-header .site-header-wrap,
@@ -245,13 +246,17 @@ Text Domain: cjc-kadence-child
 }
 
 .single-post .content-area,
-.home .content-area {
+.home .content-area,
+.page .content-area,
+.archive .content-area {
     margin-top: 0;
     margin-bottom: 0;
 }
 
 .single-post .entry-content-wrap,
-.home .entry-content-wrap {
+.home .entry-content-wrap,
+.page .entry-content-wrap,
+.archive .entry-content-wrap {
     padding: 0;
 }
 
@@ -395,41 +400,10 @@ a:hover {
 }
 
 /* =============================================
-   Pages & Single Posts — Solid header, no hero
-   Transparent header is for homepage only.
+   Pages — Transparent header overlays hero
+   (Same immersive treatment as homepage & single posts)
    Hero title disabled via kadence_post_layout filter.
    ============================================= */
-
-.page:not(.home) .site-header,
-.page:not(.home) .site-header .site-header-wrap,
-.page:not(.home) .site-header .site-header-inner-wrap,
-.page:not(.home) .site-header .site-header-upper-wrap,
-.page:not(.home) .site-header .site-header-upper-inner-wrap,
-.page:not(.home) .site-header .site-main-header-wrap,
-.page:not(.home) .site-header .site-header-row-container-inner,
-.page:not(.home) .site-header .site-container {
-    background: var(--cjc-coconut-cream) !important;
-    border-bottom: 1px solid var(--cjc-warm-sand) !important;
-}
-
-.page:not(.home) .site-header .site-title,
-.page:not(.home) .site-header .site-branding a,
-.page:not(.home) .site-header .primary-menu-container > ul > li > a,
-.page:not(.home) .site-header .search-toggle-open,
-.page:not(.home) .site-header a {
-    color: var(--cjc-lava-black) !important;
-    text-shadow: none !important;
-}
-
-.page:not(.home) .site-header .primary-menu-container > ul > li > a:hover {
-    color: var(--cjc-ocean-deep) !important;
-}
-
-.page:not(.home) .site-header .nav--toggle-sub .dropdown-nav-toggle svg,
-.page:not(.home) .site-header .search-toggle-open svg {
-    color: var(--cjc-lava-black) !important;
-    fill: var(--cjc-lava-black) !important;
-}
 
 /* Ensure full-width layout (no sidebar) */
 .archive .site-container .site-inner-wrap,
@@ -479,38 +453,3 @@ a:hover {
     padding: 0;
 }
 
-/* Pages with transparent-header class — force solid header */
-.page:not(.home).transparent-header .site-header,
-.page:not(.home).transparent-header .site-header .site-header-wrap,
-.page:not(.home).transparent-header .site-header .site-header-inner-wrap,
-.page:not(.home).transparent-header .site-header .site-header-upper-wrap,
-.page:not(.home).transparent-header .site-header .site-header-upper-inner-wrap,
-.page:not(.home).transparent-header .site-header .site-main-header-wrap,
-.page:not(.home).transparent-header .site-header .site-header-row-container-inner,
-.page:not(.home).transparent-header .site-header .site-container {
-    background: var(--cjc-coconut-cream) !important;
-    border-bottom: 1px solid var(--cjc-warm-sand) !important;
-}
-
-.page:not(.home).transparent-header .site-header .site-title,
-.page:not(.home).transparent-header .site-header .site-branding a,
-.page:not(.home).transparent-header .site-header .primary-menu-container > ul > li > a,
-.page:not(.home).transparent-header .site-header .search-toggle-open,
-.page:not(.home).transparent-header .site-header a {
-    color: var(--cjc-lava-black) !important;
-    text-shadow: none !important;
-}
-
-.page:not(.home).transparent-header .site-header .primary-menu-container > ul > li > a:hover {
-    color: var(--cjc-ocean-deep) !important;
-}
-
-.page:not(.home).transparent-header .site-header .nav--toggle-sub .dropdown-nav-toggle svg,
-.page:not(.home).transparent-header .site-header .search-toggle-open svg {
-    color: var(--cjc-lava-black) !important;
-    fill: var(--cjc-lava-black) !important;
-}
-
-.page:not(.home).transparent-header #inner-wrap {
-    padding-top: 0;
-}
