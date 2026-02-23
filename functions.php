@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
    ============================================= */
 
 if ( ! defined( 'CJC_CHILD_VERSION' ) ) {
-    define('CJC_CHILD_VERSION', '1.4.0');
+    define('CJC_CHILD_VERSION', '1.5.0');
 }
 if ( ! defined( 'CJC_CHILD_DIR' ) ) {
     define('CJC_CHILD_DIR', get_stylesheet_directory());
@@ -261,6 +261,22 @@ add_action('template_redirect', function () {
         exit;
     }
 });
+
+/* =============================================
+   SEO: IndexNow Key File Fallback
+   Serves the IndexNow verification key file when
+   Rank Math's rewrite is blocked by cache/nginx.
+   ============================================= */
+
+add_action('template_redirect', function () {
+    $path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+    if ($path === 'bdd2830e8bac489f98f79bb58afcdf77.txt') {
+        header('Content-Type: text/plain');
+        header('X-Robots-Tag: noindex');
+        echo 'bdd2830e8bac489f98f79bb58afcdf77';
+        exit;
+    }
+}, 1);
 
 /* =============================================
    Navigation Menus
