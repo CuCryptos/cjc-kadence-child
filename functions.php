@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
    ============================================= */
 
 if ( ! defined( 'CJC_CHILD_VERSION' ) ) {
-    define('CJC_CHILD_VERSION', '1.2.0');
+    define('CJC_CHILD_VERSION', '1.3.0');
 }
 if ( ! defined( 'CJC_CHILD_DIR' ) ) {
     define('CJC_CHILD_DIR', get_stylesheet_directory());
@@ -268,24 +268,19 @@ if (defined('WP_CLI') && WP_CLI) {
 }
 
 /* =============================================
-   Kadence Layout Overrides — Disable Hero Title on Pages & Posts
-   Our templates handle their own title areas.
+   Kadence Layout Overrides
+   - Disable hero title on pages & posts (our templates own the title area)
+   - Enable transparent header on ALL page types (pages, posts, archives)
+     Kadence controls this via $layout['transparent'] in kadence_post_layout.
    ============================================= */
 
 add_filter('kadence_post_layout', function ($layout) {
     if (is_page() || is_singular('post')) {
         $layout['title'] = 'normal';
     }
+    $layout['transparent'] = 'enable';
     return $layout;
 });
-
-/* =============================================
-   Kadence Transparent Header — Enable on All Pages
-   All templates have immersive heroes; the header
-   overlays them with white text/logo.
-   ============================================= */
-
-add_filter('kadence_transparent_header', '__return_true');
 
 /* =============================================
    Archive Pages — 12 Posts Per Page
