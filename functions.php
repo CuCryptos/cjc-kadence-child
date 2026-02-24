@@ -392,3 +392,11 @@ add_action('wp_head', function () {
         echo '<link rel="preload" as="image" href="' . esc_url($hero_url) . '">' . "\n";
     }
 }, 1);
+
+// Redirect deleted posts to homepage (SEO: avoid 404s from old links)
+add_action('template_redirect', function () {
+    if (is_404() && isset($_GET['p'])) {
+        wp_redirect(home_url('/'), 301);
+        exit;
+    }
+});
