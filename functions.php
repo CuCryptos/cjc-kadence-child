@@ -393,9 +393,9 @@ add_action('wp_head', function () {
     }
 }, 1);
 
-// Redirect deleted posts to homepage (SEO: avoid 404s from old links)
+// Redirect all 404s to homepage (SEO: covers deleted posts, old slugs, ?p= IDs)
 add_action('template_redirect', function () {
-    if (is_404() && isset($_GET['p'])) {
+    if (is_404()) {
         wp_redirect(home_url('/'), 301);
         exit;
     }
