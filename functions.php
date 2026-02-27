@@ -283,6 +283,11 @@ add_action('template_redirect', function () {
         '/shop/'             => '/',
         '/copycat-taco-bell-beefy-five-layer-burrito-recipe/' => '/',
         '/make-this-easy-pad-thai-recipe-in-just-30-minutes/' => '/',
+        // Consolidate old recipe posts → new versions (Feb 27, 2026)
+        '/oxtail-soup-hawaiian-style/'    => '/hawaiian-oxtail-soup/',
+        '/saimin-hawaiian-noodle-soup/'   => '/saimin-recipe/',
+        '/hurricane-popcorn-recipe/'      => '/hurricane-popcorn-hawaiian/',
+        '/kulolo-hawaiian-taro-pudding/'  => '/kulolo-recipe/',
     ];
 
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
