@@ -22,34 +22,62 @@ if ( ! defined( 'CJC_CHILD_URI' ) ) {
 }
 
 /* =============================================
-   301 Redirects — Fix 404s from external links
+   301 Redirects — Legitimate content moves
    ============================================= */
 
 add_action('template_redirect', function () {
     $redirects = [
-        // Hawaiian 404 → existing content
         '/10-all-time-favorite-classic-dishes-you-need-to-try/' => '/hawaiian-foods-bucket-list/',
-        // Non-Hawaiian 404s → homepage
-        '/authentic-thai-dessert-recipes-you-can-make-at-home'  => '/',
-        '/copycat-taco-bell-beefy-five-layer-burrito-recipe/'   => '/',
-        '/ultimate-mac-and-cheese-recipe-how-to-make-the-best-comfort-food' => '/',
-        '/risotto-recipe/'          => '/',
-        '/homemade-german-recipes/' => '/',
-        '/vegan-lasagna-recipe'     => '/',
-        '/winter-comfort-foods'     => '/',
-        '/1480-2'                   => '/',
-        '/recipes-2/'               => '/',
+        '/lemon-garlic-shrimp-recipe/' => '/garlic-shrimp-truck-style-big-island-vibes-on-your-plate/',
+        '/1480-2/'       => '/kalua-pig-oven-roasted-hawaiian/',
+        '/recipes-2/'    => '/category/recipes/',
     ];
 
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $path = rtrim($path, '/') . '/';
 
-    foreach ($redirects as $source => $dest) {
-        $source_normalized = rtrim($source, '/') . '/';
-        if ($path === $source_normalized) {
-            wp_redirect(home_url($dest), 301);
-            exit;
-        }
+    if (isset($redirects[$path])) {
+        wp_redirect(home_url($redirects[$path]), 301);
+        exit;
+    }
+});
+
+/* =============================================
+   410 Gone — Off-brand content permanently removed
+   Tells Google to de-index these pages.
+   ============================================= */
+
+add_action('template_redirect', function () {
+    $gone = [
+        '/air-fryer/',
+        '/best-german-desserts/',
+        '/best-german-dishes/',
+        '/the-6-best-instant-pots-of-2024-according-to-experts/',
+        '/best-cookware-sets-top-rated-collections-for-2024/',
+        '/top-10-best-pasta-dishes-you-need-to-try-today/',
+        '/top-10-comfort-foods-that-feel-like-a-warm-hug/',
+        '/10-most-popular-thai-dishes-you-need-to-try/',
+        '/discover-10-most-effective-diet-plans-for-weight-loss/',
+        '/delicious-best-italian-food-recipes-youll-love/',
+        '/top-15-best-foods-for-fat-burning-get-lean-naturally/',
+        '/authentic-thai-dessert-recipes-you-can-make-at-home/',
+        '/copycat-taco-bell-beefy-five-layer-burrito-recipe/',
+        '/ultimate-mac-and-cheese-recipe-how-to-make-the-best-comfort-food/',
+        '/risotto-recipe/',
+        '/homemade-german-recipes/',
+        '/vegan-lasagna-recipe/',
+        '/winter-comfort-foods/',
+        '/make-this-easy-pad-thai-recipe-in-just-30-minutes/',
+    ];
+
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $path = rtrim($path, '/') . '/';
+
+    if (in_array($path, $gone, true)) {
+        status_header(410);
+        nocache_headers();
+        echo '<!DOCTYPE html><html><head><title>Gone</title></head><body><h1>410 Gone</h1><p>This page has been permanently removed.</p><p><a href="/">Visit CurtisJCooks.com</a></p></body></html>';
+        exit;
     }
 });
 
@@ -275,14 +303,11 @@ add_filter('rank_math/frontend/robots', function ($robots) {
 
 add_action('template_redirect', function () {
     $redirects = [
-        '/1480-2/'           => '/kalua-pig-oven-roasted-hawaiian/',
         '/contact-2/'        => '/about/',
         '/contact/'          => '/about/',
         '/blog-2/'           => '/',
         '/blog/'             => '/',
         '/shop/'             => '/',
-        '/copycat-taco-bell-beefy-five-layer-burrito-recipe/' => '/',
-        '/make-this-easy-pad-thai-recipe-in-just-30-minutes/' => '/',
         // Consolidate old recipe posts → new versions (Feb 27, 2026)
         '/oxtail-soup-hawaiian-style/'    => '/hawaiian-oxtail-soup/',
         '/saimin-hawaiian-noodle-soup/'   => '/saimin-recipe/',
@@ -398,9 +423,10 @@ add_action('wp_head', function () {
     }
 }, 1);
 
-// Redirect all 404s to homepage (SEO: covers deleted posts, old slugs, ?p= IDs)
+// Redirect ?p=ID 404s to homepage (deleted posts accessed by ID)
+// Other 404s return normal 404 so Google de-indexes them.
 add_action('template_redirect', function () {
-    if (is_404()) {
+    if (is_404() && isset($_GET['p'])) {
         wp_redirect(home_url('/'), 301);
         exit;
     }
