@@ -124,6 +124,16 @@ add_action('init', function () {
         'type'          => 'number',
         'auth_callback' => function () { return current_user_can('edit_posts'); },
     ]);
+
+    // FAQ schema meta (JSON string of Q&A pairs for CJC Auto Schema plugin)
+    foreach ( array( 'post', 'page' ) as $post_type ) {
+        register_post_meta( $post_type, '_cjc_faq_schema', [
+            'show_in_rest'  => true,
+            'single'        => true,
+            'type'          => 'string',
+            'auth_callback' => '__return_true',
+        ]);
+    }
 });
 
 /* =============================================
