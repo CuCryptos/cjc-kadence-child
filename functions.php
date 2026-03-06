@@ -68,6 +68,7 @@ add_action('template_redirect', function () {
         '/vegan-lasagna-recipe/',
         '/winter-comfort-foods/',
         '/make-this-easy-pad-thai-recipe-in-just-30-minutes/',
+        '/easy-christmas-appetizers/',
     ];
 
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -323,6 +324,10 @@ add_action('template_redirect', function () {
         '/saimin-hawaiian-noodle-soup/'   => '/saimin-recipe/',
         '/hurricane-popcorn-recipe/'      => '/hurricane-popcorn-hawaiian/',
         '/kulolo-hawaiian-taro-pudding/'  => '/kulolo-recipe/',
+        // Slug changes / trashed posts → current versions (Mar 6, 2026)
+        '/lava-flow-hawaiis-frozen-strawberry-pina-colada/' => '/lava-flow-drink-recipe/',
+        '/char-siu-pork-hawaiian-chinese-bbq/'              => '/char-siu-hawaiian-style-chinese-bbq-pork-for-lunar-new-year/',
+        '/manapua-hawaiis-char-siu-bao-steamed-or-baked/'   => '/manapua-recipe/',
     ];
 
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
